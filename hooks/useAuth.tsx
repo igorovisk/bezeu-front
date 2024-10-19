@@ -1,6 +1,5 @@
 // hooks/useAuth.ts
 import api from "../app/services/axios"; // Seu axios instance
-import { useAuth } from "@/app/contexts/AuthContext"; // Mantenha a importação, mas não chame o hook aqui
 
 // Função para fazer login
 export async function performLogin(email: string, password: string) {

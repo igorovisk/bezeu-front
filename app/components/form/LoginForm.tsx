@@ -1,7 +1,6 @@
 "use client";
-import { useAuth } from "@/app/contexts/AuthContext";
-import { performLogin } from "@/hooks/useAuth";
 import { useState } from "react";
+import { useAuth } from "@/app/contexts/AuthContext"; // Hook atualizado
 import { toast } from "react-toastify"; // Importa toast para mensagens de erro
 
 export default function LoginForm() {
@@ -11,17 +10,7 @@ export default function LoginForm() {
 
    async function handleSubmit(event: React.FormEvent) {
       event.preventDefault();
-      try {
-         const response = await performLogin(email, password); // Chama a função de login
-         if (response.status === 200) {
-            login(); // Chama a função login do contexto se a resposta for bem-sucedida
-         } else {
-            toast.error("Usuário ou senha estão incorretos"); // Mensagem de erro se o login falhar
-         }
-      } catch (error) {
-         console.error("Erro no login:", error);
-         toast.error("Usuário ou senha estão incorretos"); // Mensagem de erro
-      }
+      await login(email, password); // Chama a função login do contexto
    }
 
    return (
@@ -52,7 +41,10 @@ export default function LoginForm() {
                   className="p-2 text-black"
                   placeholder="Insira sua senha"
                />
-               <button type="submit" className="mt-10 bg-green-400 p-4 rounded">
+               <button
+                  type="submit"
+                  className="mt-10 bg-green-400 p-4 rounded font-bold"
+               >
                   Fazer login
                </button>
             </div>
@@ -60,3 +52,4 @@ export default function LoginForm() {
       </section>
    );
 }
+``;

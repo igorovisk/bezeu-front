@@ -4,10 +4,11 @@ import { AuthProvider } from "./contexts/AuthContext"; // Adjust the path if nec
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Navbar from "./components/navbar/Navbar";
 
 export const metadata = {
-   title: "My App",
-   description: "An app with toast notifications",
+   title: "Bezeu Eventos",
+   description: "Gerenciamento de fornecedores/clientes",
 };
 
 export default function RootLayout({ children }: { children: ReactNode }) {
@@ -15,8 +16,11 @@ export default function RootLayout({ children }: { children: ReactNode }) {
       <html lang="en">
          <body>
             <AuthProvider>
-               {children}
-               <ToastContainer position="top-right" autoClose={3000} />
+               <section className="flex flex-col w-full h-screen">
+                  <Navbar />
+                  {children}
+                  <ToastContainer position="top-right" autoClose={3000} />
+               </section>
             </AuthProvider>
          </body>
       </html>

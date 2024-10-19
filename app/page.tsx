@@ -1,34 +1,21 @@
-// app/page.tsx (ou onde você está usando o logout)
 "use client";
 
-import { useAuth } from "./contexts/AuthContext"; // Importa o useAuth
-import { useState } from "react";
-import { performLogin, performLogout } from "../hooks/useAuth"; // Importa as funções de login e logout
-import { toast } from "react-toastify"; // Importa toast para mensagens de erro
-import LoginForm from "./components/auth/LoginForm";
-
+import { useAuth } from "./contexts/AuthContext"; // Usa o hook atualizado
+import LoginForm from "./components/form/LoginForm";
+import { toast } from "react-toastify"; // Para mensagens de erro
+import List from "./components/list/List";
 export default function Home() {
-   const { isLoggedIn, logout } = useAuth(); // Desestruture o logout do contexto
+   const { isLoggedIn, logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
 
    const handleLogout = async () => {
       try {
-         await performLogout(); // Chama a função de logout da API
-         logout(); // Atualiza o estado de loggedIn no contexto
+         await logout(); // Agora chama diretamente a função do contexto
+         toast.success("Logout realizado com sucesso");
       } catch (error) {
          console.error("Erro ao deslogar:", error);
+         toast.error("Erro ao realizar logout");
       }
    };
 
-   return (
-      <div>
-         {!isLoggedIn ? (
-            <LoginForm />
-         ) : (
-            <div>
-               <h1>You are logged in!</h1>
-               <button onClick={handleLogout}>Logout</button>
-            </div>
-         )}
-      </div>
-   );
+   return <div>{!isLoggedIn ? <LoginForm /> : <List></List>}</div>;
 }
