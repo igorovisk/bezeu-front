@@ -30,8 +30,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
       try {
          const response = await api.get("/me");
          if (response.status === 200) {
-            setIsLoggedIn(true);
-            setUserData(response.data);
+            if (response.data) {
+               setUserData(response.data);
+               setIsLoggedIn(true);
+            }
          } else {
             setIsLoggedIn(false);
             setUserData(null);
@@ -43,17 +45,26 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
          router.push("/login"); // Redirect to login if session is invalid
       }
    };
+   console.log(userData, " userData");
+   console.log(isLoggedIn, " logged");
 
    // Fetch user data on initial load and when user navigates
    useEffect(() => {
       fetchUserData(); // Validate session on component mount
+   }, [router]);
+
+   useEffect(() => {
+      if (!userData) {
+         setIsLoggedIn(false);
+      }
    }, []);
 
    // Login function
    const login = async (email: string, password: string) => {
       try {
          const response = await api.post("/login", { email, password });
-         if (response.status === 200) {
+         if (response.status == 200) {
+            console.log(response.status);
             await fetchUserData(); // Fetch user data after login
             router.push("/"); // Navigate after successful login
          } else {

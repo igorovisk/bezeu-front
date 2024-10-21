@@ -16,6 +16,10 @@ export default function Navbar() {
       await logout();
    };
 
+   console.log(isLoggedIn, " is logged na navbnar");
+   console.log(userData, " user data navba");
+   console.log(userData?.username, " user asdasd navba");
+
    return (
       <nav className="bg-violet-600">
          <div className="flex justify-between items-center w-full p-5">

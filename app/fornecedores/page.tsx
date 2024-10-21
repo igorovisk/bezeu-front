@@ -16,7 +16,7 @@ export default function FornecedoresPage() {
    const [description, setDescription] = useState<String>("");
 
    return (
-      <main className="flex flex-col w-full ">
+      <main className="flex flex-col w-full h-fit">
          <div className="flex justify-end p-5">
             <Link
                type="button"
@@ -27,6 +27,7 @@ export default function FornecedoresPage() {
                Novo Fornecedor
             </Link>
          </div>
+         <div className="bg-slate-100 w-full"></div>
       </main>
    );
 }
