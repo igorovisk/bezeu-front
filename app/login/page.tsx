@@ -1,9 +1,20 @@
 "use client";
 
-import { useAuth } from "./contexts/AuthContext"; // Usa o hook atualizado
+import { useAuth } from "../contexts/AuthContext"; // Usa o hook atualizado
+import LoginForm from "../components/form/LoginForm";
 import { toast } from "react-toastify"; // Para mensagens de erro
-export default function Home() {
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+
+export default function LoginPage() {
    const { isLoggedIn, logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
+   const router = useRouter();
+
+   useEffect(() => {
+      if (isLoggedIn) {
+         router.push("/"); // Redirect on successful login
+      }
+   }, [isLoggedIn, router]);
 
    const handleLogout = async () => {
       try {
@@ -15,5 +26,9 @@ export default function Home() {
       }
    };
 
-   return <div>oi</div>;
+   return (
+      <div>
+         <LoginForm />
+      </div>
+   );
 }

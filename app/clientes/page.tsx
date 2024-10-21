@@ -8,7 +8,7 @@ import api from "../services/axios";
 import Link from "next/link";
 import { IoMdAddCircleOutline } from "react-icons/io";
 
-export default function FornecedoresPage() {
+export default function ClientesPage() {
    const { isLoggedIn, logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
    const [name, setName] = useState<String>("");
    const [document, setDocument] = useState<String>("");
@@ -21,10 +21,10 @@ export default function FornecedoresPage() {
             <Link
                type="button"
                className="rounded text-white bg-green-500 p-4 font-bold flex items-center justify-center gap-2"
-               href={"/fornecedores/criar-fornecedor"}
+               href={"/clientes/criar-cliente"}
             >
                <IoMdAddCircleOutline size={24} />
-               Novo Fornecedor
+               Novo Cliente
             </Link>
          </div>
       </main>

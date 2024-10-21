@@ -1,14 +1,14 @@
 "use client";
 
 import { toast } from "react-toastify"; // Para mensagens de erro
-import Navbar from "../components/navbar/Navbar";
-import { useAuth } from "../contexts/AuthContext";
+import Navbar from "../../components/navbar/Navbar";
+import { useAuth } from "../../contexts/AuthContext";
 import { ChangeEvent, useState } from "react";
-import api from "../services/axios";
+import api from "../../services/axios";
 import Link from "next/link";
-import { IoMdAddCircleOutline } from "react-icons/io";
+import ClientForm from "@/app/components/form/ClientForm";
 
-export default function FornecedoresPage() {
+export default function CriarClientePage() {
    const { isLoggedIn, logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
    const [name, setName] = useState<String>("");
    const [document, setDocument] = useState<String>("");
@@ -20,13 +20,13 @@ export default function FornecedoresPage() {
          <div className="flex justify-end p-5">
             <Link
                type="button"
-               className="rounded text-white bg-green-500 p-4 font-bold flex items-center justify-center gap-2"
-               href={"/fornecedores/criar-fornecedor"}
+               className="rounded text-white bg-green-500 p-4 font-bold"
+               href={"/clientes"}
             >
-               <IoMdAddCircleOutline size={24} />
-               Novo Fornecedor
+               Lista de Clientes
             </Link>
          </div>
+         <ClientForm />
       </main>
    );
 }

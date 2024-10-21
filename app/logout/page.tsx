@@ -1,8 +1,10 @@
 "use client";
 
-import { useAuth } from "./contexts/AuthContext"; // Usa o hook atualizado
+import { useAuth } from "../contexts/AuthContext"; // Usa o hook atualizado
+import LoginForm from "../components/form/LoginForm";
 import { toast } from "react-toastify"; // Para mensagens de erro
-export default function Home() {
+import List from "../components/list/List";
+export default function Logout() {
    const { isLoggedIn, logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
 
    const handleLogout = async () => {
@@ -15,5 +17,5 @@ export default function Home() {
       }
    };
 
-   return <div>oi</div>;
+   return <div>{!isLoggedIn ? <LoginForm /> : <List></List>}</div>;
 }

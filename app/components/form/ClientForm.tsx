@@ -5,7 +5,7 @@ import { useAuth } from "../../contexts/AuthContext";
 import { useState } from "react";
 import api from "../../services/axios";
 
-export default function SupplierForm() {
+export default function ClientForm() {
    const { userData } = useAuth(); // Desestrutura o estado e função do contexto
    const [name, setName] = useState<String>("");
    const [document, setDocument] = useState<String>("");
@@ -15,8 +15,8 @@ export default function SupplierForm() {
    async function handleSubmit(event: React.FormEvent) {
       event.preventDefault();
       try {
-         const newSupplierResponse = await api.post(
-            `users/${userData?.id}/suppliers`,
+         const newClientResponse = await api.post(
+            `users/${userData?.id}/clients`,
             {
                name,
                document,
@@ -25,9 +25,9 @@ export default function SupplierForm() {
             }
          ); // Chama a função login do contexto
 
-         if (newSupplierResponse.status == 200) {
-            toast.success("Fornecedor cadastrado com sucesso!");
-            console.log(newSupplierResponse, " Supp response");
+         if (newClientResponse.status == 200) {
+            toast.success("Cliente cadastrado com sucesso!");
+            console.log(newClientResponse, " Supp response");
          }
       } catch (error: any) {
          // If the server responded with an error status code
