@@ -1,28 +1,34 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuth } from "@/app/contexts/AuthContext"; // Adjust path if needed
 import Link from "next/link";
 import { CiBoxes } from "react-icons/ci";
 import { IoIosLogOut } from "react-icons/io";
 import { MdAttachMoney } from "react-icons/md";
-import { FaRegNoteSticky } from "react-icons/fa6";
+import { FaNoteSticky, FaRegNoteSticky } from "react-icons/fa6";
+import { usePathname } from "next/navigation";
 
 export default function Navbar() {
    const { logout, isLoggedIn, userData } = useAuth(); // Get logout and auth state
    const [isOpen, setIsOpen] = useState(false);
-
+   const [isActive, setIsActive] = useState<string>("");
    const handleLogout = async (e: React.MouseEvent) => {
       e.preventDefault();
       await logout();
    };
+   const pathname = usePathname();
+   console.log(pathname);
 
-   console.log(isLoggedIn, " is logged na navbnar");
-   console.log(userData, " user data navba");
-   console.log(userData?.username, " user asdasd navba");
+   function checkIfIsActive(href: string) {
+      return pathname == href;
+   }
+   useEffect(() => {
+      setIsActive(pathname);
+   }, [pathname]);
 
    return (
-      <nav className="bg-violet-600">
-         <div className="flex justify-between items-center w-full p-5">
+      <nav className="bg-violet-900">
+         <div className="flex justify-between items-center w-full p-5 font-bold">
             {/* Logo / Title */}
             <Link href={"/"}>
                <h1 className="text-white text-3xl">Bezeu Eventos</h1>
@@ -32,7 +38,9 @@ export default function Navbar() {
                <>
                   {/* Hamburger Icon (Mobile) */}
                   <button
-                     className="block lg:hidden p-2 text-white"
+                     className={`block lg:hidden p-2 text-white ${
+                        isOpen && "bg-white rounded !text-black"
+                     }`}
                      onClick={() => setIsOpen(!isOpen)}
                   >
                      <svg
@@ -52,14 +60,17 @@ export default function Navbar() {
                   </button>
 
                   {/* Desktop Menu */}
-                  <div className="hidden lg:flex gap-4 items-center">
+                  <div className="hidden lg:flex gap-6 items-center active:">
                      <span className="font-bold pr-10">
                         {`Bem vindo(a) ${userData?.username}`}
                      </span>
 
                      <Link
                         href="/fornecedores"
-                        className="text-white flex items-center gap-2"
+                        className={`flex items-center gap-1  ${
+                           checkIfIsActive("/fornecedores") &&
+                           "bg-white p-2 text-black rounded"
+                        }`}
                      >
                         <CiBoxes size={24} />
                         Fornecedores
@@ -67,14 +78,22 @@ export default function Navbar() {
 
                      <Link
                         href="/clientes"
-                        className="text-white flex items-center gap-2"
+                        className={`flex items-center gap-1  ${
+                           checkIfIsActive("/clientes") &&
+                           "bg-white p-2 text-black rounded"
+                        }`}
                      >
                         <MdAttachMoney size={24} />
                         Clientes
                      </Link>
 
+                     <button className="text-white flex items-center gap-1">
+                        <FaNoteSticky size={24} />
+                        Anotações
+                     </button>
+
                      <button
-                        className="text-white flex items-center gap-2"
+                        className="text-white flex items-center gap-1"
                         onClick={handleLogout}
                      >
                         <IoIosLogOut size={24} />
@@ -88,13 +107,16 @@ export default function Navbar() {
          {/* Mobile Menu */}
          {isLoggedIn && (
             <div
-               className={`lg:hidden bg-violet-500 transition-all duration-300 ease-in-out ${
+               className={`flex flex-col  justify-center items-center lg:hidden bg-violet-800 transition-all duration-300 gap-4 ease-in-out ${
                   isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
-               }`}
+               } pt-3`}
             >
                <Link
                   href="/fornecedores"
-                  className="block p-4 text-white"
+                  className={`flex text-white justify-center items-center p-4   gap-2  ${
+                     checkIfIsActive("/fornecedores") &&
+                     "bg-white p-2 !text-black rounded"
+                  } `}
                   onClick={() => setIsOpen(false)}
                >
                   <CiBoxes size={24} /> Fornecedores
@@ -102,13 +124,24 @@ export default function Navbar() {
 
                <Link
                   href="/clientes"
-                  className="block p-4 text-white"
+                  className={`flex text-white justify-center items-center p-4   gap-2  ${
+                     checkIfIsActive("/clientes") &&
+                     "bg-white p-2 !text-black rounded"
+                  } `}
                   onClick={() => setIsOpen(false)}
                >
                   <MdAttachMoney size={24} /> Clientes
                </Link>
 
-               <button className="block p-4 text-white" onClick={handleLogout}>
+               <button className="flex justify-center items-center p-4 text-white gap-2 ">
+                  <FaNoteSticky size={24} />
+                  Anotações
+               </button>
+
+               <button
+                  className="flex justify-center items-center p-4 text-white gap-2 "
+                  onClick={handleLogout}
+               >
                   <IoIosLogOut size={24} /> Sair
                </button>
             </div>

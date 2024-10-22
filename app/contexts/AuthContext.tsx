@@ -45,8 +45,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
          router.push("/login"); // Redirect to login if session is invalid
       }
    };
-   console.log(userData, " userData");
-   console.log(isLoggedIn, " logged");
 
    // Fetch user data on initial load and when user navigates
    useEffect(() => {

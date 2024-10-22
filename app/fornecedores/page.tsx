@@ -7,13 +7,11 @@ import { ChangeEvent, useState } from "react";
 import api from "../services/axios";
 import Link from "next/link";
 import { IoMdAddCircleOutline } from "react-icons/io";
+import List from "../components/list/List";
 
 export default function FornecedoresPage() {
-   const { isLoggedIn, logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
-   const [name, setName] = useState<String>("");
-   const [document, setDocument] = useState<String>("");
-   const [phone, setPhone] = useState<String>("");
-   const [description, setDescription] = useState<String>("");
+   const { logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
+   const [suppliers, setSuppliers] = useState(userData?.suppliers);
 
    return (
       <main className="flex flex-col w-full h-fit">
@@ -27,7 +25,9 @@ export default function FornecedoresPage() {
                Novo Fornecedor
             </Link>
          </div>
-         <div className="bg-slate-100 w-full"></div>
+         <div className="bg-slate-100 w-full">
+            <List title={"Seus Fornecedores"}></List>
+         </div>
       </main>
    );
 }

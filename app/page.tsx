@@ -3,7 +3,7 @@
 import { useAuth } from "./contexts/AuthContext"; // Usa o hook atualizado
 import { toast } from "react-toastify"; // Para mensagens de erro
 export default function Home() {
-   const { isLoggedIn, logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
+   const { logout } = useAuth(); // Desestrutura o estado e função do contexto
 
    const handleLogout = async () => {
       try {
