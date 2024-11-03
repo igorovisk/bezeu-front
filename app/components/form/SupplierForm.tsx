@@ -2,8 +2,9 @@
 
 import { toast } from "react-toastify"; // Para mensagens de erro
 import { useAuth } from "../../contexts/AuthContext";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import api from "../../services/axios";
+import { useRouter } from "next/navigation";
 
 export default function SupplierForm() {
    const { userData } = useAuth(); // Desestrutura o estado e função do contexto
@@ -11,6 +12,7 @@ export default function SupplierForm() {
    const [document, setDocument] = useState<String>("");
    const [phone, setPhone] = useState<String>("");
    const [description, setDescription] = useState<String>("");
+   const router = useRouter();
 
    async function handleSubmit(event: React.FormEvent) {
       event.preventDefault();
@@ -28,6 +30,8 @@ export default function SupplierForm() {
          if (newSupplierResponse.status == 200) {
             toast.success("Fornecedor cadastrado com sucesso!");
             console.log(newSupplierResponse, " Supp response");
+
+            router.push("/fornecedores");
          }
       } catch (error: any) {
          // If the server responded with an error status code
@@ -95,4 +99,7 @@ export default function SupplierForm() {
          </form>
       </div>
    );
+}
+function fetchUserData() {
+   throw new Error("Function not implemented.");
 }
