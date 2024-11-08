@@ -43,7 +43,7 @@ export default function LoginForm() {
                />
                <button
                   type="submit"
-                  className="mt-10 bg-green-400 p-4 rounded font-bold"
+                  className="mt-10 bg-transparent p-4 rounded font-bold border-green-400 border text-green-400 hover:bg-green-400 hover:text-white"
                >
                   Fazer login
                </button>
