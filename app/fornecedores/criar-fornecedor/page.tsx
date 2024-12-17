@@ -1,7 +1,7 @@
 "use client";
 
 import { toast } from "react-toastify"; // Para mensagens de erro
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../components/aside/Sidebar";
 import { useAuth } from "../../contexts/AuthContext";
 import { ChangeEvent, useState } from "react";
 import api from "../../services/axios";

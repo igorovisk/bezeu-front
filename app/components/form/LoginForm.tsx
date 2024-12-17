@@ -14,25 +14,26 @@ export default function LoginForm() {
    }
 
    return (
-      <section>
-         <form
-            className="flex flex-col justify-center items-center h-screen"
-            onSubmit={handleSubmit}
-         >
-            <h1 className="text-center text-white text-5xl mb-10">
+      <section className="flex flex-col justify-center items-center h-screen bg-slate-900 w-screen">
+         <form className="bg-white p-5 rounded py-16" onSubmit={handleSubmit}>
+            <h1 className="text-center text-black text-5xl mb-10">
                Bezeu Eventos
             </h1>
             <div className="flex flex-col gap-2">
-               <label htmlFor="email">Email</label>
+               <label htmlFor="email" className="text-black font-bold">
+                  Email
+               </label>
                <input
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   type="email"
                   id="email"
-                  className="p-2 text-black"
+                  className="p-2 text-blac k"
                   placeholder="Insira seu email"
                />
-               <label htmlFor="password">Senha</label>
+               <label htmlFor="password" className="text-black font-bold">
+                  Senha
+               </label>
                <input
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
@@ -43,9 +44,9 @@ export default function LoginForm() {
                />
                <button
                   type="submit"
-                  className="mt-10 bg-transparent p-4 rounded font-bold border-green-400 border text-green-400 hover:bg-green-400 hover:text-white"
+                  className="mt-10  p-2 rounded font-bold text-white bg-slate-800 border hover:bg-green-400 hover:text-white"
                >
-                  Fazer login
+                  Login
                </button>
             </div>
          </form>

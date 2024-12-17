@@ -1,22 +1,19 @@
 "use client";
 
-import { toast } from "react-toastify"; // Para mensagens de erro
-import Navbar from "../components/navbar/Navbar";
 import { useAuth } from "../contexts/AuthContext";
-import { ChangeEvent, useEffect, useState } from "react";
-import api from "../services/axios";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { IoMdAddCircleOutline } from "react-icons/io";
-import List from "../components/list/List";
+import SupplierList from "../components/list/SupplierList";
 import { useRouter } from "next/navigation"; // Correct hook for router
 import { FaSpinner } from "react-icons/fa"; // Ícone de carregamento
 
 export default function FornecedoresPage() {
-   const { logout, userData } = useAuth(); // Desestrutura o estado e função do contexto
-   const [suppliers, setSuppliers] = useState(userData?.suppliers);
+   const { userData } = useAuth(); // Desestrutura o estado e função do contexto
    const context = useAuth();
    const router = useRouter();
    const [loading, setLoading] = useState(true);
+
    useEffect(() => {
       async function fetchData() {
          setLoading(true); // Inicia o carregamento
@@ -35,7 +32,7 @@ export default function FornecedoresPage() {
    }
 
    return (
-      <main className="flex flex-col w-full h-full bg-black text-white">
+      <section className="flex flex-col w-full h-full bg-white text-white p-5">
          <div className="sm:flex  lg:justify-between items-center text-center ">
             <h1 className="flex font-bold text-2xl  w-full  p-5 text-center justify-center items-center m-auto">
                FORNECEDORES
@@ -46,12 +43,16 @@ export default function FornecedoresPage() {
                href={"/fornecedores/criar-fornecedor"}
             >
                <IoMdAddCircleOutline size={24} />
-               Novo Fornecedor
+               <h1 className="text-nowrap">Novo Fornecedor</h1>
             </Link>
          </div>
-         <div className="bg-slate-100 w-full h-full">
-            <List title={"Seus Fornecedores"} data={userData?.suppliers} />
+         <div className=" w-full h-full">
+            <SupplierList
+               title={"Seus Fornecedores"}
+               data={userData?.suppliers}
+               userId={userData?.id}
+            />
          </div>
-      </main>
+      </section>
    );
 }

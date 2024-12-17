@@ -9,13 +9,17 @@ import {
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
+import api from "../../services/axios";
+import { toast } from "react-toastify"; // Para mensagens de erro
 
-export default function List({ data }: any) {
+export default function SupplierList({ data, userId }: any) {
    const router = useRouter();
    const [expanded, setExpanded] = useState<string | null>(null);
    const [isMobile, setIsMobile] = useState(false);
    const [searchTerm, setSearchTerm] = useState("");
 
+   console.log(data, "data");
+   console.log(userId, "userId");
    useEffect(() => {
       const handleResize = () => {
          setIsMobile(window.innerWidth <= 768);
@@ -40,8 +44,26 @@ export default function List({ data }: any) {
       router.push(`/fornecedores/${id}/edit`);
    };
 
-   const handleDelete = (id: string) => {
+   const handleDelete = async (id: string) => {
       console.log(`Deleting fornecedor with id ${id}`);
+      try {
+         const deleteSupplierResponse = await api.patch(
+            `users/${userId}/suppliers/${id}`
+         ); // Chama a função login do contexto
+
+         if (deleteSupplierResponse.status == 200) {
+            toast.success("Fornecedor DELETADO com sucesso!");
+            console.log(deleteSupplierResponse, " Supp response");
+
+            router.push("/fornecedores");
+         }
+      } catch (error: any) {
+         // If the server responded with an error status code
+         console.log(error.response.data.message, "Error Message");
+         toast.error(error.response.data.message);
+         toast.error("Ocorreu algum erro ao deletar o fornecedor");
+         console.log("Error caiu aqui");
+      }
    };
 
    const handleUpload = (id: string) => {
@@ -61,7 +83,7 @@ export default function List({ data }: any) {
                placeholder="Buscar fornecedor..."
                value={searchTerm}
                onChange={(e) => setSearchTerm(e.target.value)}
-               className="w-full p-3 border border-gray-300 rounded-lg"
+               className="w-full p-3 border border-gray-300 rounded-lg text-black"
             />
          </div>
 
@@ -79,9 +101,16 @@ export default function List({ data }: any) {
                   </tr>
                </thead>
                <tbody className="bg-white divide-y divide-gray-100">
-                  {filteredData?.map(
-                     (supplier: SupplierInterface, index: number) => (
-                        <tr key={index} className="hover:bg-gray-100">
+                  {filteredData
+                     ?.slice() // Create a shallow copy of the array to avoid mutating the original
+                     .sort((a: SupplierInterface, b: SupplierInterface) =>
+                        a.name.toLowerCase().localeCompare(b.name.toLowerCase())
+                     )
+                     .map((supplier: SupplierInterface, index: number) => (
+                        <tr
+                           key={index}
+                           className="hover:bg-gray-100 bg-slate-100"
+                        >
                            <td className="px-6 py-4 whitespace-nowrap text-md font-medium text-gray-900 flex items-center gap-2">
                               <FaUser className="text-gray-500" />
                               {supplier.name}
@@ -119,8 +148,7 @@ export default function List({ data }: any) {
                               </div>
                            </td>
                         </tr>
-                     )
-                  )}
+                     ))}
                </tbody>
             </table>
 

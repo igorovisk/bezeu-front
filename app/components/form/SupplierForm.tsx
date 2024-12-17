@@ -42,54 +42,57 @@ export default function SupplierForm() {
    }
 
    return (
-      <div>
+      <div className="flex w-full h-full bg-white">
          <form
-            className="text-center bg-slate-100 sm:w-[300px] w-fit h-fit mx-auto mt-10 p-5 text-black"
+            className="text-center bg-slate-100 lg:w-[300px]  mx-auto mt-10 p-5 text-black gap-2 w-full h-fit justify-center items-center "
             onSubmit={handleSubmit}
          >
-            <h1 className="font-bold text-xl  text-center m-auto justify-center items-center flex mb-5">
-               Cadastro de fornecedores
+            <h1 className="font-bold text-xl  text-center m-auto items-center justify-center flex mb-5">
+               Novo Fornecedor
             </h1>
-            <span className="flex flex-col gap-2 justify-start items-start font-bold">
-               <label htmlFor="">Nome</label>
-               <input
-                  type="text"
-                  id="name"
-                  placeholder="Nome do fornecedor"
-                  className="p-2"
-                  onChange={(e) => setName(e.target.value)}
-               />
+            <span className="flex flex-col gap-4 justify-center items-center w-full h-full">
+               <span className="flex flex-col justify-start items-start font-bold  ">
+                  <label htmlFor="">Nome</label>
+                  <input
+                     type="text"
+                     id="name"
+                     placeholder="Nome do fornecedor"
+                     className="p-2"
+                     onChange={(e) => setName(e.target.value)}
+                  />
+               </span>
+               <span className="flex flex-col justify-start items-start font-bold">
+                  <label htmlFor="document">CPF/CNPJ</label>
+                  <input
+                     type="text"
+                     id="document"
+                     placeholder="Documento do fornecedor"
+                     className="p-2"
+                     onChange={(e) => setDocument(e.target.value)}
+                  />
+               </span>
+               <span className="flex flex-col justify-start items-start font-bold">
+                  <label htmlFor="">Telefone</label>
+                  <input
+                     type="text"
+                     id="phone"
+                     placeholder="Telefone do fornecedor"
+                     className="p-2"
+                     onChange={(e) => setPhone(e.target.value)}
+                  />
+               </span>
+               <span className="flex flex-col justify-start items-start font-bold">
+                  <label htmlFor="">Descrição</label>
+                  <input
+                     type="textarea"
+                     id="description"
+                     placeholder="Descrição do fornecedor"
+                     className="p-2"
+                     onChange={(e) => setDescription(e.target.value)}
+                  />
+               </span>
             </span>
-            <span className="flex flex-col gap-2 justify-start items-start font-bold">
-               <label htmlFor="document">CPF/CNPJ</label>
-               <input
-                  type="text"
-                  id="document"
-                  placeholder="Documento do fornecedor"
-                  className="p-2"
-                  onChange={(e) => setDocument(e.target.value)}
-               />
-            </span>
-            <span className="flex flex-col gap-2 justify-start items-start font-bold">
-               <label htmlFor="">Telefone</label>
-               <input
-                  type="text"
-                  id="phone"
-                  placeholder="Telefone do fornecedor"
-                  className="p-2"
-                  onChange={(e) => setPhone(e.target.value)}
-               />
-            </span>
-            <span className="flex flex-col gap-2 justify-start items-start font-bold">
-               <label htmlFor="">Descrição</label>
-               <input
-                  type="textarea"
-                  id="description"
-                  placeholder="Descrição do fornecedor"
-                  className="p-2"
-                  onChange={(e) => setDescription(e.target.value)}
-               />
-            </span>
+
             <button
                type="submit"
                className="mt-10 bg-green-400 p-4 rounded font-bold"
@@ -99,7 +102,4 @@ export default function SupplierForm() {
          </form>
       </div>
    );
-}
-function fetchUserData() {
-   throw new Error("Function not implemented.");
 }
