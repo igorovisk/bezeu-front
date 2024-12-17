@@ -5,21 +5,33 @@ import {
    FaEdit,
    FaTrash,
    FaUpload,
+   FaSpinner,
    FaExternalLinkAlt,
 } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import api from "../../services/axios";
 import { toast } from "react-toastify"; // Para mensagens de erro
+import { useAuth } from "@/app/contexts/AuthContext";
 
-export default function SupplierList({ data, userId }: any) {
+export default function SupplierList() {
    const router = useRouter();
    const [expanded, setExpanded] = useState<string | null>(null);
    const [isMobile, setIsMobile] = useState(false);
    const [searchTerm, setSearchTerm] = useState("");
+   const context = useAuth();
+   const [loading, setLoading] = useState(true);
+   const userData = context.userData;
 
-   console.log(data, "data");
-   console.log(userId, "userId");
+   useEffect(() => {
+      async function fetchData() {
+         setLoading(true); // Inicia o carregamento
+         await context.fetchUserData();
+         setLoading(false); // Finaliza o carregamento
+      }
+      fetchData();
+   }, [router]);
+
    useEffect(() => {
       const handleResize = () => {
          setIsMobile(window.innerWidth <= 768);
@@ -30,8 +42,9 @@ export default function SupplierList({ data, userId }: any) {
       return () => window.removeEventListener("resize", handleResize);
    }, []);
 
-   const filteredData = data?.filter((supplier: SupplierInterface) =>
-      supplier.name.toLowerCase().includes(searchTerm.toLowerCase())
+   const filteredData = userData?.suppliers?.filter(
+      (supplier: SupplierInterface) =>
+         supplier.name.toLowerCase().includes(searchTerm.toLowerCase())
    );
 
    const toggleExpand = (id: string) => {
@@ -48,21 +61,18 @@ export default function SupplierList({ data, userId }: any) {
       console.log(`Deleting fornecedor with id ${id}`);
       try {
          const deleteSupplierResponse = await api.patch(
-            `users/${userId}/suppliers/${id}`
-         ); // Chama a função login do contexto
+            `users/${userData?.id}/suppliers/${id}`
+         );
 
          if (deleteSupplierResponse.status == 200) {
             toast.success("Fornecedor DELETADO com sucesso!");
-            console.log(deleteSupplierResponse, " Supp response");
-
-            router.push("/fornecedores");
+            // Atualize os dados do usuário após a exclusão
+            await context.fetchUserData(); // Chama a função para atualizar os dados do usuário no contexto
          }
       } catch (error: any) {
-         // If the server responded with an error status code
          console.log(error.response.data.message, "Error Message");
          toast.error(error.response.data.message);
          toast.error("Ocorreu algum erro ao deletar o fornecedor");
-         console.log("Error caiu aqui");
       }
    };
 
@@ -73,6 +83,14 @@ export default function SupplierList({ data, userId }: any) {
    const handleView = (id: string) => {
       router.push(`/fornecedores/${id}`);
    };
+
+   if (loading) {
+      return (
+         <div className="flex justify-center items-center min-h-screen">
+            <FaSpinner className="animate-spin text-3xl text-blue-500" />
+         </div>
+      );
+   }
 
    return (
       <>
@@ -106,6 +124,7 @@ export default function SupplierList({ data, userId }: any) {
                      .sort((a: SupplierInterface, b: SupplierInterface) =>
                         a.name.toLowerCase().localeCompare(b.name.toLowerCase())
                      )
+                     .filter((supplier: SupplierInterface) => !supplier.deleted)
                      .map((supplier: SupplierInterface, index: number) => (
                         <tr
                            key={index}

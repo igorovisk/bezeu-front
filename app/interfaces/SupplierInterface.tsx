@@ -6,5 +6,6 @@ interface SupplierInterface {
    description: string | null;
    color?: string;
    phone?: string;
+   deleted?: boolean;
    Products?: Array<any>;
 }
