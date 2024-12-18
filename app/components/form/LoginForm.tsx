@@ -15,8 +15,9 @@ export default function LoginForm() {
 
    return (
       <section className="flex flex-col justify-center items-center h-screen bg-slate-900 w-screen">
-         <form className="bg-white p-5 rounded py-16" onSubmit={handleSubmit}>
-            <h1 className="text-center text-black text-5xl mb-10">
+         <form className="bg-white p-24 rounded py-32" onSubmit={handleSubmit}>
+            {/* <img alt="logo" src="/public/">  */}
+            <h1 className=" text-center text-black text-5xl mb-10">
                Bezeu Eventos
             </h1>
             <div className="flex flex-col gap-2">

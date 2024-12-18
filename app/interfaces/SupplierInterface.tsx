@@ -2,7 +2,7 @@ interface SupplierInterface {
    id: string;
    name: string;
    email?: string;
-   document?: string;
+   document?: string | null;
    description: string | null;
    color?: string;
    phone?: string;
