@@ -77,6 +77,7 @@ export default function SupplierList() {
    };
 
    const handleUpload = (id: string) => {
+      router.push(`/fornecedores/${id}/documentos/`);
       console.log(`Uploading document for fornecedor with id ${id}`);
    };
 

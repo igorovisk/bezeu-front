@@ -11,6 +11,8 @@ interface ProductInterface {
    name: string;
    quantity: number;
    costPerUnit: number;
+   rentStartDate?: Date;
+   rentEndDate?: Date;
 }
 
 interface SupplierInterface {
@@ -32,6 +34,8 @@ export default function ViewFornecedor(props: any) {
       name: "",
       quantity: 0,
       costPerUnit: 0,
+      rentStartDate: undefined,
+      rentEndDate: undefined,
    });
 
    const router = useRouter();
@@ -137,11 +141,11 @@ export default function ViewFornecedor(props: any) {
                         </p>
                         <p>
                            Data de retirada no fornecedor:
-                           {product.rentStartDate}
+                           {String(product?.rentStartDate)}
                         </p>
                         <p>
                            Data de devolução:
-                           {product.rentEndDate}
+                           {String(product?.rentEndDate)}
                         </p>
                      </div>
                      <div className="flex gap-2">
@@ -210,6 +214,39 @@ export default function ViewFornecedor(props: any) {
                      className="w-full p-2 border rounded-md"
                   />
                </div>
+               <div>
+                  <label className="block font-semibold">
+                     Data de retirada
+                  </label>
+                  <input
+                     type="date"
+                     value={newProduct.costPerUnit}
+                     onChange={(e) =>
+                        setNewProduct({
+                           ...newProduct,
+                           costPerUnit: Number(e.target.value),
+                        })
+                     }
+                     className="w-full p-2 border rounded-md"
+                  />
+               </div>
+               <div>
+                  <label className="block font-semibold">
+                     Data de devolução do produto ao fornecedor
+                  </label>
+                  <input
+                     type="date"
+                     value={newProduct.costPerUnit}
+                     onChange={(e) =>
+                        setNewProduct({
+                           ...newProduct,
+                           costPerUnit: Number(e.target.value),
+                        })
+                     }
+                     className="w-full p-2 border rounded-md"
+                  />
+               </div>
+
                <div className="flex items-end">
                   <button
                      onClick={handleAddProduct}

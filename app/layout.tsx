@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             <AuthProvider>
                <section className={`flex  w-full h-full ${roboto.className}`}>
                   <Sidebar />
-                  <main className="flex w-screen h-screen">{children}</main>
+                  <main className="flex w-screen h-auto">{children}</main>
 
                   <ToastContainer position="top-right" autoClose={3000} />
                </section>

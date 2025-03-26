@@ -23,7 +23,7 @@ export default function Sidebar() {
    if (!isLoggedIn) return null;
 
    return (
-      <aside className=" hidden md:flex  w-[16rem] flex-col bg-gray-100 text-gray-800 shadow dark:bg-gray-900 dark:text-gray-200 p-6 ">
+      <aside className=" hidden md:flex  w-[16rem] h-screen flex-col bg-gray-100 text-gray-800 shadow dark:bg-gray-900 dark:text-gray-200 p-6 ">
          <div className="mb-4 flex items-center">
             <h1 className="text-lg font-medium">Bezeu Eventos</h1>
          </div>
